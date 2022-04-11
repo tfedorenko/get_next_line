@@ -6,7 +6,7 @@
 /*   By: tfedoren <tfedoren@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 18:50:24 by tfedoren          #+#    #+#             */
-/*   Updated: 2022/04/10 21:50:43 by tfedoren         ###   ########.fr       */
+/*   Updated: 2022/04/11 18:01:59 by tfedoren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char *get_next_line(int fd);
 size_t ft_strlen(char *s);
 void ft_putstr(char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strchr(const char *s, int c);
 
 #endif 

@@ -6,7 +6,7 @@
 /*   By: tfedoren <tfedoren@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 18:25:43 by tfedoren          #+#    #+#             */
-/*   Updated: 2022/04/19 14:05:19 by tfedoren         ###   ########.fr       */
+/*   Updated: 2022/04/19 19:29:00 by tfedoren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,57 +17,72 @@
 
 char *get_next_line(int fd)
 {
-    char buf[1000];
-    size_t count;
+    char *buf;
     size_t bytes_read;
-	char *oldline;
 	char *line;
 	char *newline;
+	static char *rest;
     int linelength;
-	int k;
     int i;
 	int j;
+	int k;
+	int n;
+	int m;
 
-    count = 0;
-    bytes_read = read(fd, buf, count);
+	if (*rest != '\0')
+	{
+		if (ft_strchr(*rest, '\n'))
+		{
+			n = 0;
+			while (*rest != '\n')
+			{
+				n++;
+			}
+			line = malloc(sizeof(char) * (n + 1));
+			m = 0;
+			while (rest[m] != '\n' && m < n)
+			{
+				line[m] = rest[m];
+				m++;
+			}
+		}	
+	}
 
-    k = 0;
+    bytes_read = read(fd, buf, BUFFER_SIZE);
+
     linelength = 0;
-    while (buf[k] != '\n' && buf[k] != '\0')
+    while (buf[linelength] != '\n' && buf[linelength] != '\0')
     {
         linelength++;
-        k++;
     }
     line = malloc(sizeof(char) * (linelength + 1));
+	rest = malloc(sizeof(char) * (BUFFER_SIZE - linelength));
 	
-    
-    i = 0;
-	j = 0;
-	newline = (char *)malloc(sizeof(char) * (ft_strlen(oldline) + ft_strlen(line) + 1));
-	if (!newline)
+	if(!line)
 		return (NULL);
-	while (buf[i] != '\n' && buf[i] != '\0')
-	{
-		newline[i] = buf[i];
-		i++;
-	}
 	
-	while (s2[j] && i < (ft_strlen(s1) + ft_strlen(s2)))
+	i=0;
+	j=0;
+	k=0;
+	while (buf[i] != '\0')
 	{
-		str[i] = s2[j];
-		i++;
-		j++;
+		if (buf[i] != '\n')
+		{
+			line[j] = buf[i];
+			j++;
+			i++;
+		}
+		else if (j < BUFFER_SIZE)
+		{
+			rest[k] = buf[i+1];
+			k++;
+			i++;
+		}
+		line[linelength] = "\n";
 	}
-	str[i] = '\0';
-	return (str);
-    
-    
-    
-    line = ft_strlcpy
-    if (!line)
-        return (NULL);
-    ft_putstr(line);
-       
+
+	
+	
 }
 
 int main()

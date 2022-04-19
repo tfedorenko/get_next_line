@@ -6,7 +6,7 @@
 /*   By: tfedoren <tfedoren@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 18:50:24 by tfedoren          #+#    #+#             */
-/*   Updated: 2022/04/11 18:01:59 by tfedoren         ###   ########.fr       */
+/*   Updated: 2022/04/19 17:24:43 by tfedoren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
+BUFFER_SIZE = 1000;
 char *get_next_line(int fd);
 size_t ft_strlen(char *s);
 void ft_putstr(char *s);

@@ -6,7 +6,7 @@
 /*   By: tfedoren <tfedoren@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 18:25:43 by tfedoren          #+#    #+#             */
-/*   Updated: 2022/04/11 18:25:15 by tfedoren         ###   ########.fr       */
+/*   Updated: 2022/04/19 14:05:19 by tfedoren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 char *get_next_line(int fd)
 {
-    static char buf[1000];
+    char buf[1000];
     size_t count;
     size_t bytes_read;
 	char *oldline;
@@ -29,7 +29,6 @@ char *get_next_line(int fd)
 	int j;
 
     count = 0;
-	count = sizeof(buf);
     bytes_read = read(fd, buf, count);
 
     k = 0;
@@ -40,7 +39,6 @@ char *get_next_line(int fd)
         k++;
     }
     line = malloc(sizeof(char) * (linelength + 1));
-	
 	
     
     i = 0;

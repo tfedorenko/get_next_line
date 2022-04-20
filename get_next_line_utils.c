@@ -6,7 +6,7 @@
 /*   By: tfedoren <tfedoren@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 20:31:26 by tfedoren          #+#    #+#             */
-/*   Updated: 2022/04/19 19:14:06 by tfedoren         ###   ########.fr       */
+/*   Updated: 2022/04/20 21:06:29 by tfedoren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,29 @@ char	*ft_strchr(char *s, int c)
 	if (c == '\0')
 		return ((char *)s);
 	return (0);
+}
+
+char *create_line(char *buf)
+{
+	int	linelength;
+	
+	linelenght = 0;
+	while (buf[linelength] != '\n' && buf[linelength] != '\0')
+	{
+		linelength++;
+	}
+	line = (char *)malloc(sizeof(char) * (linelength + 1));
+	if (!line)
+		return (NULL);
+	i = 0;
+	j = 0;
+	restlength = 0;
+	while (buf[i] != '\0' && buf[i] != '\n')
+	{
+		line[j] = buf[i];
+		j++;
+		i++;
+		line[linelength] = '\n';
+	}
+	return (line);
 }

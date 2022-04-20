@@ -6,7 +6,7 @@
 /*   By: tfedoren <tfedoren@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 18:25:43 by tfedoren          #+#    #+#             */
-/*   Updated: 2022/04/19 19:29:00 by tfedoren         ###   ########.fr       */
+/*   Updated: 2022/04/20 21:09:06 by tfedoren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,80 +15,69 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-    char *buf;
-    size_t bytes_read;
-	char *line;
-	char *newline;
-	static char *rest;
-    int linelength;
-    int i;
-	int j;
-	int k;
-	int n;
-	int m;
+	char	*buf;
+	size_t	bytes_read;
+	char	*line;
+	char	*newline;
+	static char	rest[BUFFER_SIZE + 1];
+	int	linelength;
+	int	i;
+	int	j;
+	int	restlength;
 
-	if (*rest != '\0')
-	{
-		if (ft_strchr(*rest, '\n'))
-		{
-			n = 0;
-			while (*rest != '\n')
-			{
-				n++;
-			}
-			line = malloc(sizeof(char) * (n + 1));
-			m = 0;
-			while (rest[m] != '\n' && m < n)
-			{
-				line[m] = rest[m];
-				m++;
-			}
-		}	
-	}
-
-    bytes_read = read(fd, buf, BUFFER_SIZE);
-
-    linelength = 0;
-    while (buf[linelength] != '\n' && buf[linelength] != '\0')
-    {
-        linelength++;
-    }
-    line = malloc(sizeof(char) * (linelength + 1));
-	rest = malloc(sizeof(char) * (BUFFER_SIZE - linelength));
 	
-	if(!line)
+
+	bytes_read = read(fd, buf, BUFFER_SIZE);
+	buf[bytes_read] = '\0';
+	
+	if (bytes_read != 0)
+	{
+		
+	}
+	/*linelength = 0;
+	while (buf[linelength] != '\n' && buf[linelength] != '\0')
+	{
+		linelength++;
+	}
+	//printf("I'm here\n");
+	line = (char *)malloc(sizeof(char) * (linelength + 1));
+	//rest = malloc(sizeof(char) * (BUFFER_SIZE - linelength));
+	if (!line)
 		return (NULL);
-	
-	i=0;
-	j=0;
-	k=0;
-	while (buf[i] != '\0')
-	{
-		if (buf[i] != '\n')
-		{
-			line[j] = buf[i];
-			j++;
-			i++;
-		}
-		else if (j < BUFFER_SIZE)
-		{
-			rest[k] = buf[i+1];
-			k++;
-			i++;
-		}
-		line[linelength] = "\n";
-	}
 
-	
-	
+	i = 0;
+	j = 0;
+	restlength = 0;
+	while (buf[i] != '\0' && buf[i] != '\n')
+	{
+		line[j] = buf[i];
+		j++;
+		i++;
+		line[linelength] = '\n';
+	}
+	return (line);*/
+
+	while (i < BUFFER_SIZE && buf != '\0')
+	{
+		restlength++;
+		rest = (char *)malloc(sizeof(char) * restlength);
+	}
 }
 
-int main()
+int	main(int argc, char *argv[])
 {
-	int fd;
+	int	fd;
+	char	*output;
 
-    fd = open("test1.txt", O_RDONLY);
-	get_next_line(fd);
+	//printf("%d The amount of arguments\n", argc);
+	//for (int i = 0; i < argc; i++)
+	//	printf("%s This is argument #%d\n", argv[i], i);
+
+	fd = open(argv[1], O_RDONLY);
+	// printf("I'm here\n");
+	output = get_next_line(fd);
+	write(1, output, ft_strlen(output));
+	return (0);
 }

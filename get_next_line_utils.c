@@ -6,7 +6,7 @@
 /*   By: tfedoren <tfedoren@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 20:31:26 by tfedoren          #+#    #+#             */
-/*   Updated: 2022/04/20 21:06:29 by tfedoren         ###   ########.fr       */
+/*   Updated: 2022/04/20 21:18:16 by tfedoren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void ft_putstr(char *s)
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	unsigned int	i;
+	
 
 	i = 0;
 	if (!dst || !src)

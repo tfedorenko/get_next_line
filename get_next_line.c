@@ -6,7 +6,7 @@
 /*   By: tfedoren <tfedoren@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 18:25:43 by tfedoren          #+#    #+#             */
-/*   Updated: 2022/04/20 21:09:06 by tfedoren         ###   ########.fr       */
+/*   Updated: 2022/04/20 21:18:12 by tfedoren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	*get_next_line(int fd)
 	int	i;
 	int	j;
 	int	restlength;
+	
 
 	
 

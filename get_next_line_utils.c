@@ -6,7 +6,7 @@
 /*   By: tfedoren <tfedoren@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 20:31:26 by tfedoren          #+#    #+#             */
-/*   Updated: 2022/04/21 20:43:19 by tfedoren         ###   ########.fr       */
+/*   Updated: 2022/04/21 22:18:05 by tfedoren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,16 @@ char	*ft_create_line(char *rest)
 {
 	int	linelength;
 	char *line;
-	printf("%s <= here 5\n", rest);
+	//printf("%s <= here 5\n", rest);
+
+	
 	linelength = 0;
 	while (rest[linelength] != '\n' && rest[linelength] != '\0')
 	{
 		linelength++;
 	}
-	printf("%d <= here 6\n", linelength);
-	line = (char *)malloc(sizeof(char) * (linelength + 2));
+	//printf("%d <= here 6\n", linelength);
+	line = (char *)malloc(sizeof(char) * (linelength + 1));
 	if (!line)
 		return (NULL);
 	linelength = 0;
@@ -105,12 +107,17 @@ char	*ft_create_line(char *rest)
 		linelength++;
 		//printf("%s <= here 7\n", line);
 	}
-	printf("%s <= here 8\n", line);
-	if (line[linelength] == '\n')
+	//printf("%s <= here 8\n", line);
+	/*if (rest[linelength] == '\n')
 	{
-		line[linelength] = '\n';
+		line[linelength] = rest[linelength];
 		linelength++;
-	}
+		//printf("%s <= here 9\n", line);
+	}*/
+	//if(linelength <= 0)
+	//	return (NULL);
+	line[linelength] = '\n';
+	linelength++;
 	line[linelength] = '\0';
 	return (line);
 }
@@ -124,7 +131,7 @@ char	*ft_check_rest(int fd, char *rest)
 	while (!ft_strchr(rest, '\n') && bytes_read != 0)
 	{
 		bytes_read = read(fd, buf, (BUFFER_SIZE));
-		printf("%d <= here 0\n", bytes_read);
+		//printf("%d <= here 0\n", bytes_read);
 		if (bytes_read == -1)
 			return (NULL);
 		buf[bytes_read] = '\0';

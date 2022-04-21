@@ -6,7 +6,7 @@
 /*   By: tfedoren <tfedoren@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 18:25:43 by tfedoren          #+#    #+#             */
-/*   Updated: 2022/04/20 21:18:12 by tfedoren         ###   ########.fr       */
+/*   Updated: 2022/04/21 20:42:11 by tfedoren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,68 +17,56 @@
 
 char	*get_next_line(int fd)
 {
-	char	*buf;
-	size_t	bytes_read;
-	char	*line;
-	char	*newline;
+	char		*line;
 	static char	rest[BUFFER_SIZE + 1];
-	int	linelength;
-	int	i;
-	int	j;
-	int	restlength;
-	
+	char	*temp_rest;
+	int i;
 
-	
-
-	bytes_read = read(fd, buf, BUFFER_SIZE);
-	buf[bytes_read] = '\0';
-	
-	if (bytes_read != 0)
-	{
-		
-	}
-	/*linelength = 0;
-	while (buf[linelength] != '\n' && buf[linelength] != '\0')
-	{
-		linelength++;
-	}
-	//printf("I'm here\n");
-	line = (char *)malloc(sizeof(char) * (linelength + 1));
-	//rest = malloc(sizeof(char) * (BUFFER_SIZE - linelength));
-	if (!line)
-		return (NULL);
-
+	temp_rest = ft_check_rest(fd, rest);
+	printf("%s <= here 1\n", temp_rest);
 	i = 0;
-	j = 0;
-	restlength = 0;
-	while (buf[i] != '\0' && buf[i] != '\n')
+	while (i <= ft_strlen(temp_rest))
 	{
-		line[j] = buf[i];
-		j++;
+		//ft_strlcpy(rest, temp_rest, ft_strlen(temp_rest));
+		rest[i] = temp_rest[i];
 		i++;
-		line[linelength] = '\n';
 	}
-	return (line);*/
-
-	while (i < BUFFER_SIZE && buf != '\0')
+	printf("%s <= here 1,5\n", rest);
+	
+	//free(temp_rest);
+	//printf("I'm here party time");
+	line = ft_create_line(rest);
+	//free(temp_rest);
+	printf("%s <= here 2\n", line);
+	temp_rest = ft_update_rest(rest);
+	while (i <= ft_strlen(temp_rest))
 	{
-		restlength++;
-		rest = (char *)malloc(sizeof(char) * restlength);
+		//ft_strlcpy(rest, temp_rest, ft_strlen(temp_rest));
+		rest[i] = temp_rest[i];
+		i++;
 	}
+	//ft_strlcpy(rest, temp_rest, ft_strlen(temp_rest-1));
+	printf("%s <= here 3\n", temp_rest);
+	printf("%s <= here 4\n", rest);
+	return (line);
 }
 
 int	main(int argc, char *argv[])
 {
 	int	fd;
-	char	*output;
+	char	*output1;
+	char	*output2;
 
 	//printf("%d The amount of arguments\n", argc);
 	//for (int i = 0; i < argc; i++)
 	//	printf("%s This is argument #%d\n", argv[i], i);
 
 	fd = open(argv[1], O_RDONLY);
-	// printf("I'm here\n");
-	output = get_next_line(fd);
-	write(1, output, ft_strlen(output));
+	printf("I'm here\n");
+	output1 = get_next_line(fd);
+	write(1, "result is here:\n", 16);
+	write(1, output1, ft_strlen(output1));
+	//output2 = get_next_line(fd);
+	//write(1, output2, ft_strlen(output2));
 	return (0);
 }

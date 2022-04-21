@@ -6,46 +6,19 @@
 /*   By: tfedoren <tfedoren@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 20:31:26 by tfedoren          #+#    #+#             */
-/*   Updated: 2022/04/20 21:18:16 by tfedoren         ###   ########.fr       */
+/*   Updated: 2022/04/21 20:43:19 by tfedoren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t ft_strlen(char *s)
+size_t	ft_strlen(char *s)
 {
-    size_t i;
-
-    i = 0;
-    while (s[i] != '\0')
-        i++;
-    return (i);
-}
-
-void ft_putstr(char *s)
-{
-    write(1, s, ft_strlen(s));
-}
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
-{
-	unsigned int	i;
-	
+	size_t	i;
 
 	i = 0;
-	if (!dst || !src)
-		return (0);
-	if (size > 0)
-	{
-		while (src[i] && i < (size - 1))
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
-	}
-	while (src[i])
-			i++;
+	while (s[i] != '\0')
+		i++;
 	return (i);
 }
 
@@ -90,27 +63,103 @@ char	*ft_strchr(char *s, int c)
 	return (0);
 }
 
-char *create_line(char *buf)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	unsigned int	i;
+
+	i = 0;
+	if (!dst || !src)
+		return (0);
+	if (size > 0)
+	{
+		while (src[i] && i < (size - 1))
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = '\0';
+	}
+	while (src[i])
+			i++;
+	return (i);
+}
+
+char	*ft_create_line(char *rest)
 {
 	int	linelength;
-	
-	linelenght = 0;
-	while (buf[linelength] != '\n' && buf[linelength] != '\0')
+	char *line;
+	printf("%s <= here 5\n", rest);
+	linelength = 0;
+	while (rest[linelength] != '\n' && rest[linelength] != '\0')
 	{
 		linelength++;
 	}
-	line = (char *)malloc(sizeof(char) * (linelength + 1));
+	printf("%d <= here 6\n", linelength);
+	line = (char *)malloc(sizeof(char) * (linelength + 2));
 	if (!line)
 		return (NULL);
-	i = 0;
-	j = 0;
-	restlength = 0;
-	while (buf[i] != '\0' && buf[i] != '\n')
+	linelength = 0;
+	while (rest[linelength] != '\n' && rest[linelength] != '\0')
 	{
-		line[j] = buf[i];
-		j++;
-		i++;
-		line[linelength] = '\n';
+		line[linelength] = rest[linelength];
+		linelength++;
+		//printf("%s <= here 7\n", line);
 	}
+	printf("%s <= here 8\n", line);
+	if (line[linelength] == '\n')
+	{
+		line[linelength] = '\n';
+		linelength++;
+	}
+	line[linelength] = '\0';
 	return (line);
+}
+
+char	*ft_check_rest(int fd, char *rest)
+{
+	char	buf[BUFFER_SIZE + 1];
+	int		bytes_read;
+
+	bytes_read = 1;
+	while (!ft_strchr(rest, '\n') && bytes_read != 0)
+	{
+		bytes_read = read(fd, buf, (BUFFER_SIZE));
+		printf("%d <= here 0\n", bytes_read);
+		if (bytes_read == -1)
+			return (NULL);
+		buf[bytes_read] = '\0';
+		rest = ft_strjoin (rest, buf);
+		// printf("%s", rest);
+		//if (!rest)
+		//	return (NULL);
+		//printf("%s rest", rest);
+	}
+	//printf("%s", rest);
+	return (rest);
+}
+
+char *ft_update_rest(char *rest)
+{
+	char *str;
+	int i;
+	int	j;
+
+	i = 0;
+	while (rest[i] != '\n' && rest[i] != '\0')
+	{
+		i++;
+	}
+	str = (char *)malloc(sizeof(char) * (ft_strlen(rest) - i + 2));
+	if (!str)
+		return (NULL);
+	i++;
+	j = 0;
+	while (rest[i] != '\0')
+	{
+		str[j] = rest[i];
+		i++;
+		j++;
+	}
+	rest[0] = '\0';
+	return (str);
 }

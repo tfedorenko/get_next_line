@@ -6,7 +6,7 @@
 /*   By: tfedoren <tfedoren@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 20:31:26 by tfedoren          #+#    #+#             */
-/*   Updated: 2022/04/21 22:18:05 by tfedoren         ###   ########.fr       */
+/*   Updated: 2022/04/22 19:27:43 by tfedoren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,15 @@
 size_t	ft_strlen(char *s)
 {
 	size_t	i;
-
+	
 	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
+	if (s)
+	{
+		while (s[i] != '\0')
+			i++;
+		return (i);		
+	}
+	return (0);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
@@ -88,15 +92,14 @@ char	*ft_create_line(char *rest)
 {
 	int	linelength;
 	char *line;
-	//printf("%s <= here 5\n", rest);
 
-	
 	linelength = 0;
+	if (!rest[linelength])
+		return (NULL);
 	while (rest[linelength] != '\n' && rest[linelength] != '\0')
 	{
 		linelength++;
 	}
-	//printf("%d <= here 6\n", linelength);
 	line = (char *)malloc(sizeof(char) * (linelength + 1));
 	if (!line)
 		return (NULL);
@@ -105,19 +108,14 @@ char	*ft_create_line(char *rest)
 	{
 		line[linelength] = rest[linelength];
 		linelength++;
-		//printf("%s <= here 7\n", line);
 	}
-	//printf("%s <= here 8\n", line);
-	/*if (rest[linelength] == '\n')
+	if (rest[linelength] == '\n')
 	{
 		line[linelength] = rest[linelength];
 		linelength++;
-		//printf("%s <= here 9\n", line);
-	}*/
+	}
 	//if(linelength <= 0)
 	//	return (NULL);
-	line[linelength] = '\n';
-	linelength++;
 	line[linelength] = '\0';
 	return (line);
 }
@@ -131,17 +129,13 @@ char	*ft_check_rest(int fd, char *rest)
 	while (!ft_strchr(rest, '\n') && bytes_read != 0)
 	{
 		bytes_read = read(fd, buf, (BUFFER_SIZE));
-		//printf("%d <= here 0\n", bytes_read);
 		if (bytes_read == -1)
 			return (NULL);
 		buf[bytes_read] = '\0';
 		rest = ft_strjoin (rest, buf);
-		// printf("%s", rest);
-		//if (!rest)
-		//	return (NULL);
-		//printf("%s rest", rest);
+		if (!rest)
+			return (NULL);
 	}
-	//printf("%s", rest);
 	return (rest);
 }
 
@@ -152,6 +146,8 @@ char *ft_update_rest(char *rest)
 	int	j;
 
 	i = 0;
+	if (!rest[i])
+		return (NULL);
 	while (rest[i] != '\n' && rest[i] != '\0')
 	{
 		i++;
@@ -167,6 +163,6 @@ char *ft_update_rest(char *rest)
 		i++;
 		j++;
 	}
-	rest[0] = '\0';
+	//rest[0] = '\0';
 	return (str);
 }

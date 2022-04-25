@@ -6,7 +6,7 @@
 /*   By: tfedoren <tfedoren@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 20:31:26 by tfedoren          #+#    #+#             */
-/*   Updated: 2022/04/22 19:27:43 by tfedoren         ###   ########.fr       */
+/*   Updated: 2022/04/25 20:24:47 by tfedoren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,32 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t	j;
 	char	*str;
 
-	//if (!s1 || !s2)
-	//	return (NULL);
+	if (!s1 || !s2)
+		return (NULL);
 	i = 0;
 	j = 0;
-	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	str = calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
 	if (!str)
 		return (NULL);
-	while (s1[i] != '\n' && i < ft_strlen(s1))
+	while (s1[i])
 	{
+		// printf("%c\n", str[i]);
 		str[i] = s1[i];
 		i++;
 	}
-	while (s2[j] && i < (ft_strlen(s1) + ft_strlen(s2)))
+	while (s2[j] && s2[j] != '\n')
 	{
 		str[i] = s2[j];
 		i++;
 		j++;
 	}
+	if (s2[j] == '\n')
+	{
+		str[i] = '\n';
+		i++;
+	}
 	str[i] = '\0';
+	free(s1);
 	return (str);
 }
 
@@ -67,102 +74,203 @@ char	*ft_strchr(char *s, int c)
 	return (0);
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+void	*ft_memset(void *dst, int c, size_t len)
 {
-	unsigned int	i;
+	size_t	i;
+	char	*d;
 
+	d = dst;
 	i = 0;
-	if (!dst || !src)
-		return (0);
-	if (size > 0)
+	while (i < len)
 	{
-		while (src[i] && i < (size - 1))
+		d[i] = c;
+		i++;
+	}
+	return (dst);
+}
+
+void	*ft_memmove(void *dst, void *src, size_t n)
+{
+	size_t	i;
+	char	*d;
+	char	*s;
+
+	d = (char *)dst;
+	s = (char *)src;
+	if (d == s)
+		return (d);
+	if (s < d)
+	{
+		i = n;
+		while (i--)
+			((char *)d)[i] = ((char *)s)[i];
+	}
+	else
+	{
+		i = 0;
+		while (i < n)
 		{
-			dst[i] = src[i];
+			((char *)d)[i] = ((char *)s)[i];
 			i++;
 		}
-		dst[i] = '\0';
 	}
-	while (src[i])
-			i++;
-	return (i);
+	return (d);
 }
 
-char	*ft_create_line(char *rest)
+
+
+int ft_check_first_entry(char *str)
 {
-	int	linelength;
-	char *line;
-
-	linelength = 0;
-	if (!rest[linelength])
-		return (NULL);
-	while (rest[linelength] != '\n' && rest[linelength] != '\0')
-	{
-		linelength++;
-	}
-	line = (char *)malloc(sizeof(char) * (linelength + 1));
-	if (!line)
-		return (NULL);
-	linelength = 0;
-	while (rest[linelength] != '\n' && rest[linelength] != '\0')
-	{
-		line[linelength] = rest[linelength];
-		linelength++;
-	}
-	if (rest[linelength] == '\n')
-	{
-		line[linelength] = rest[linelength];
-		linelength++;
-	}
-	//if(linelength <= 0)
-	//	return (NULL);
-	line[linelength] = '\0';
-	return (line);
+	if(str)
+		return (0);
+	else
+		return (1);
 }
 
-char	*ft_check_rest(int fd, char *rest)
-{
-	char	buf[BUFFER_SIZE + 1];
-	int		bytes_read;
+// char *ft_check_storage(char *str)
+// {
+	
+// }
 
-	bytes_read = 1;
-	while (!ft_strchr(rest, '\n') && bytes_read != 0)
-	{
-		bytes_read = read(fd, buf, (BUFFER_SIZE));
-		if (bytes_read == -1)
-			return (NULL);
-		buf[bytes_read] = '\0';
-		rest = ft_strjoin (rest, buf);
-		if (!rest)
-			return (NULL);
-	}
-	return (rest);
-}
+// char *ft_read_to_storage(int fd, char *str1)
+// {
+// 	char *buff;
+// 	int count;
+	
+// 	count = 0;
+// 	buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+// 	count = read(fd, buff, BUFFER_SIZE);
+// 	if (count == -1);
+// 	{
+// 		free(buff);
+// 		return(NULL);
+// 	}
 
-char *ft_update_rest(char *rest)
-{
-	char *str;
-	int i;
-	int	j;
+// 	buff[count] = '\0';
+// 	str1 = ft_strjoin (str1, buff);
+// 	free (buff);
+// 	if (!str1)
+// 		return (NULL);
+// 	return (str1);
+// }
 
-	i = 0;
-	if (!rest[i])
-		return (NULL);
-	while (rest[i] != '\n' && rest[i] != '\0')
-	{
-		i++;
-	}
-	str = (char *)malloc(sizeof(char) * (ft_strlen(rest) - i + 2));
-	if (!str)
-		return (NULL);
-	i++;
-	j = 0;
-	while (rest[i] != '\0')
-	{
-		str[j] = rest[i];
-		i++;
-		j++;
-	}
-	//rest[0] = '\0';
-	return (str);
-}
+// char	*ft_create_line(char *str2)
+// {
+// 	int	linelength;
+// 	char *line;
+
+
+// 	linelength = 0;
+// 	if (!str2)
+// 		return (NULL);
+// 	while (str2[linelength] != '\n' && str2[linelength] != '\0')
+// 	{
+// 		linelength++;
+// 	}
+// 	line = (char *)malloc(sizeof(char) * (linelength + 1));
+// 	if (!line)
+// 		return (NULL);
+// 	linelength = 0;
+// 	while (str2[linelength] != '\n' && str[linelength] != '\0')
+// 	{
+// 		line[linelength] = str2[linelength];
+// 		linelength++;
+// 	}
+// 	if (str2[linelength] == '\n')
+// 	{
+// 		line[linelength] = str2[linelength];
+// 		linelength++;
+// 	}
+// 	line[linelength] = '\0';
+// 	return (line);
+// 	//free(line);
+// }
+
+// char	*ft_check_rest(int fd, char *str)
+// {
+// 	char	buf[BUFFER_SIZE + 1];
+// 	int		bytes_read;
+// 	//int i;
+// 	int k = 0;
+// 	char 	*temp_line;
+// 	temp_line = calloc(1, '\0');
+// 	// printf("address of variable %p\n", str);
+// 	bytes_read = 1;
+// 	while (!ft_strchr(str, '\n') && bytes_read != 0)
+// 	{	
+	
+// 		if(*str && k == 0)
+// 		{
+// 			printf("i'm here\n");
+// 			temp_line = ft_strjoin(temp_line,str);
+// 		}
+// 		printf("this is the rest ->>>><=\n");
+// 		k++;
+// 		//buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+// 		bytes_read = read(fd, buf, (BUFFER_SIZE));
+// 		if (bytes_read <= 0 && !*temp_line)
+// 		{
+// 			free (str);
+// 			free(temp_line);
+// 		 	return (NULL);
+// 		 }
+	
+// 		str = ft_strjoin (str, buf);
+// 		buf[bytes_read] = '\0';
+// 		// printf("in the buff is liegt = %s\n", buf);
+// 		//printf("in the str is liegt = %s\n", str);
+// 		if (!str)
+// 		{
+// 			free (str);
+// 			return (NULL);
+// 		}
+// 		//free (str);
+// 	}
+// 	// if(*temp_line)
+// 		free(temp_line);
+// 	return (str);
+// 	//free (str);
+// }
+
+// char *ft_update_rest(char *str)
+// {
+// 	char *s;
+// 	int i;
+// 	int	j;
+
+// 	i = 0;
+// 	if (!str)
+// 		return (NULL);
+// //	if (!str[i])
+// //		return (NULL);
+// 	// {
+// 	// 	free(str);
+// 	// 	return (NULL);
+// 	// }
+// 	// printf("String S(before == str) --->%s<----\n", str);
+// 	while (str[i] != '\n' && str[i] != '\0')
+// 	{
+// 		i++;
+// 	}
+// 	s = (char *)malloc(sizeof(char) * (ft_strlen(str) - i + 1));
+// 	// printf("int i is ->%d\n", i);
+// 	if (!s)
+// 		return (NULL);
+// 	//free (s);
+// 	i++;
+// 	j = 0;
+// 	// printf("%c character is\n", str[i]);
+// 	// printf("%c character is\n", str[i+1]);
+// 	while (str[i] != '\0')
+// 	{	
+		
+// 		s[j] = str[i];
+// 		i++;
+// 		j++;
+// 	}
+// 	s[j] = '\0';
+// 	free(str);
+// 	// printf("String S --->%s<----\n", s);
+// 	return (s);
+// 	//free(s);
+// }

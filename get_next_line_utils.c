@@ -116,8 +116,6 @@ void	*ft_memmove(void *dst, void *src, size_t n)
 	return (d);
 }
 
-
-
 int ft_check_first_entry(char *str)
 {
 	if(str)

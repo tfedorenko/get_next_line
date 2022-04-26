@@ -47,8 +47,6 @@ while (!ft_strchr(buff, '\n'))
 		}
 	}
 	line = ft_strjoin(line, buff);
-	//Buff - line 
-	//9
 	ft_memmove(buff, &buff[ft_strlen(line)], (BUFFER_SIZE - ft_strlen(line)));
 	ft_memset(&buff[BUFFER_SIZE - ft_strlen(line)], '\0', ft_strlen(line));
 	return line;

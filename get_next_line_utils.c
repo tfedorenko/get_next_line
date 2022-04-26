@@ -41,7 +41,6 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (NULL);
 	while (s1[i])
 	{
-		// printf("%c\n", str[i]);
 		str[i] = s1[i];
 		i++;
 	}

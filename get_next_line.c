@@ -17,18 +17,16 @@
 
 char	*get_next_line(int fd)
 {
-static char buff[BUFFER_SIZE + 1];
-char *line;
-int i;
-int count;
- 
- if (fd < 0)
-	return (NULL);
+	static char buff[BUFFER_SIZE + 1];
+	char *line;
+	int count;
+	int buff_after_line;
+
+	if (fd < 0)
+		return (NULL);
 	line = (char *)malloc(sizeof(char));
-	line[0] = '\0';	
-count = 0;
-i = 0;
-while (!ft_strchr(buff, '\n'))
+	line[0] = '\0';
+	while (!ft_strchr(buff, '\n'))
 	{
 		if (*buff)
 			line = ft_strjoin(line, buff);
@@ -42,13 +40,18 @@ while (!ft_strchr(buff, '\n'))
 		if (!ft_strchr(buff, '\n') && count < BUFFER_SIZE)
 		{
 			line = ft_strjoin(line, buff);
-			ft_memset(buff, '\0', 1);
+			buff[0] ='\0';
 			return line;
 		}
 	}
 	line = ft_strjoin(line, buff);
-	ft_memmove(buff, &buff[ft_strlen(line)], (BUFFER_SIZE - ft_strlen(line)));
-	ft_memset(&buff[BUFFER_SIZE - ft_strlen(line)], '\0', ft_strlen(line));
+	buff_after_line = ft_strlen(buff) - ft_strlen(ft_strchr(buff, '\n')+1);
+	int line_1 = ft_strlen(buff) -  ft_strlen(ft_strchr(buff, '\n')) + 1;
+	int rest_line = ft_strlen(buff) - line_1;
+	ft_memmove(buff, &buff[buff_after_line], ft_strlen(ft_strchr(buff, '\n') + 1));
+
+	ft_memset(&buff[rest_line], '\0', line_1);
+
 	return line;
 	
 }

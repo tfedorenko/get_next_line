@@ -6,24 +6,19 @@
 /*   By: tfedoren <tfedoren@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 18:25:43 by tfedoren          #+#    #+#             */
-/*   Updated: 2022/04/27 18:36:21 by tfedoren         ###   ########.fr       */
+/*   Updated: 2022/04/28 21:16:19 by tfedoren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
-#include <fcntl.h>
-#include <stdlib.h>
 
 void	buff_after_line(char *buff)
 {
 	int			rest_buff;
-	int			line_length;
 
 	rest_buff = ft_strlen(buff) - ft_strlen(ft_strchr(buff, '\n') + 1);
-	line_length = ft_strlen(buff) - ft_strlen(ft_strchr(buff, '\n')) + 1;
 	ft_memmove(buff, &buff[rest_buff], ft_strlen(ft_strchr(buff, '\n') + 1));
-	buff[ft_strlen(buff) - line_length] = '\0';
+	buff[ft_strlen(buff) - rest_buff] = '\0';
 }
 
 char	*create_last(char *buff, char *line)

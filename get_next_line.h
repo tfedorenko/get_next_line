@@ -6,7 +6,7 @@
 /*   By: tfedoren <tfedoren@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 18:50:24 by tfedoren          #+#    #+#             */
-/*   Updated: 2022/04/27 18:33:46 by tfedoren         ###   ########.fr       */
+/*   Updated: 2022/05/27 14:55:32 by tfedoren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,3 +29,5 @@ char	*ft_strchr(char *s, int c);
 void	*ft_memmove(void *dst, void *src, size_t n);
 
 #endif 
+
+// Hi Serg! :)
